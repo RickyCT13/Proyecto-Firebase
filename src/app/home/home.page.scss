@@ -25,3 +25,12 @@
 #container a {
   text-decoration: none;
 }
+
+#tablaPersonas {
+  
+  th, td {
+    border-bottom: 1px solid grey;
+    text-align: start;
+    padding: 20px;
+  }
+}

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Tarea } from '../tarea';
+import { Persona } from '../persona';
 import { FirestoreService } from '../firestore.service';
 
 @Component({
@@ -8,27 +8,29 @@ import { FirestoreService } from '../firestore.service';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
-  tareaEditando = {} as Tarea;
+  personaEditando = {} as Persona;
 
-  arrayColeccionTareas: any = [
+  arrayColeccionPersonas: any = [
     {
       id: '',
-      data: {} as Tarea,
+      data: {} as Persona,
     },
   ];
 
-  idTareaSelec: string | undefined;
+  idPersonaSelec: string | undefined;
+
+  visible: boolean = true;
 
   constructor(private firestoreService: FirestoreService) {
-    this.obtenerListaTareas();
+    this.obtenerListaPersonas();
   }
 
   clicBotonInsertar() {
-    //this.firestoreService.insertar("tareas", this.tareaEditando);
-    this.firestoreService.insertar('tareas', this.tareaEditando).then(
+    //this.firestoreService.insertar("Personas", this.personaEditando);
+    this.firestoreService.insertar('Personas', this.personaEditando).then(
       () => {
-        console.log('Tarea creada correctamente!');
-        this.tareaEditando = {} as Tarea;
+        console.log('Persona creada correctamente!');
+        this.personaEditando = {} as Persona;
       },
       (error) => {
         console.error(error);
@@ -36,33 +38,51 @@ export class HomePage {
     );
   }
 
-  obtenerListaTareas() {
+  obtenerListaPersonas() {
     this.firestoreService
-      .consultar('tareas')
-      .subscribe((resultadoConsultaTareas) => {
-        this.arrayColeccionTareas = [];
-        resultadoConsultaTareas.forEach((datosTarea: any) => {
-          this.arrayColeccionTareas.push({
-            id: datosTarea.payload.doc.id,
-            data: datosTarea.payload.doc.data(),
+      .consultar('Personas')
+      .subscribe((resultadoConsultaPersonas) => {
+        this.arrayColeccionPersonas = [];
+        resultadoConsultaPersonas.forEach((datosPersona: any) => {
+          this.arrayColeccionPersonas.push({
+            id: datosPersona.payload.doc.id,
+            data: datosPersona.payload.doc.data(),
           });
         });
       });
   }
 
-  selecTarea(tarea: any) {
-    console.log('Tarea seleccionada: ' + tarea);
-    this.idTareaSelec = tarea.id;
-    this.tareaEditando.titulo = tarea.data.titulo;
-    this.tareaEditando.descripcion = tarea.data.descripcion;
+  selecPersona(Persona: any) {
+    console.log('Persona seleccionada: ' + Persona);
+    this.idPersonaSelec = Persona.id;
+    this.personaEditando.nombre = Persona.data.nombre;
+    this.personaEditando.apellidos = Persona.data.apellidos;
+    this.personaEditando.fechaNacimiento = Persona.data.fechaNacimiento;
+    this.personaEditando.dni = Persona.data.dni;
+    this.personaEditando.email = Persona.data.email;
+    this.personaEditando.direccion = Persona.data.direccion;
+    this.personaEditando.codPostal = Persona.data.codPostal;
+    this.personaEditando.poblacion = Persona.data.poblacion;
+    this.personaEditando.provincia = Persona.data.provincia;
+    this.personaEditando.telefono = Persona.data.telefono;
   }
 
   clicBotonBorrar() {
-    if (this.idTareaSelec !== undefined) {
-      this.firestoreService.borrar('tareas', this.idTareaSelec).then(() => {
-        this.obtenerListaTareas();
-        this.tareaEditando = {} as Tarea;
+    if (this.idPersonaSelec !== undefined) {
+      this.firestoreService.borrar('Personas', this.idPersonaSelec).then(() => {
+        this.obtenerListaPersonas();
+        this.personaEditando = {} as Persona;
       });
     }
+  }
+  clicBotonActualizar() {
+    this.firestoreService.actualizar('Personas', this.idPersonaSelec, this.personaEditando).then(() => {
+      this.obtenerListaPersonas();
+      this.personaEditando = {} as Persona;
+    });
+  }
+
+  visibilidad() {
+    this.visible = (!this.visible);
   }
 }

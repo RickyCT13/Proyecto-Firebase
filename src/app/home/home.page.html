@@ -1,37 +1,88 @@
+<script>
+  let hide = true;
+</script>
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>
-      Ejemplo Tareas
-    </ion-title>
+    <ion-title> Personas </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content [fullscreen]="true" class="ion-padding">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">Ejemplo Tareas</ion-title>
+      <ion-title size="large">Tabla de personas</ion-title>
     </ion-toolbar>
   </ion-header>
 
-  <ion-label>Título</ion-label>
-  <ion-input [(ngModel)]="tareaEditando.titulo"></ion-input>
+  <div class="ion-padding">
+    <ion-label>Nombre</ion-label>
+    <ion-input [(ngModel)]="personaEditando.nombre"></ion-input>
+    
+    <ion-label>Apellido(s)</ion-label>
+    <ion-input [(ngModel)]="personaEditando.apellidos"></ion-input>
+    
+    <ion-label>Fecha de nacimiento</ion-label>
+    <ion-input type="date" [(ngModel)]="personaEditando.fechaNacimiento"></ion-input>
+    
+    <ion-label>DNI</ion-label>
+    <ion-input [(ngModel)]="personaEditando.dni"></ion-input>
+    
+    <ion-label>Email</ion-label>
+    <ion-input [(ngModel)]="personaEditando.email"></ion-input>
+    
+    <ion-label>Dirección</ion-label>
+    <ion-input [(ngModel)]="personaEditando.direccion"></ion-input>
+    
+    <ion-label>Código postal</ion-label>
+    <ion-input type="number" [(ngModel)]="personaEditando.codPostal"></ion-input>
+    
+    <ion-label>Población</ion-label>
+    <ion-input [(ngModel)]="personaEditando.poblacion"></ion-input>
+    
+    <ion-label>Provincia</ion-label>
+    <ion-input [(ngModel)]="personaEditando.provincia"></ion-input>
+    
+    <ion-label>Número de teléfono</ion-label>
+    <ion-input type="number" [(ngModel)]="personaEditando.telefono"></ion-input>
+    <ion-button (click)="clicBotonInsertar()">Añadir persona</ion-button>
+  </div>
+  
 
-  <ion-label>Descripción</ion-label>
-  <ion-input [(ngModel)]="tareaEditando.descripcion"></ion-input>
+  <h1>Tabla de personas</h1>
+  <ion-button (click)="visibilidad()" expand="block" fill="clear" shape="round" *ngIf="visible == false">
+    Esconder
+  </ion-button>
+  <ion-button (click)="visibilidad()" expand="block" fill="clear" shape="round" *ngIf="visible == true">
+    Mostrar
+  </ion-button>
+  <table id="tablaPersonas" *ngIf="visible == false">
+    <thead>
+      <th>Nombre</th>
+      <th>Apellidos</th>
+      <th>Fecha Nac.</th>
+      <th>DNI</th>
+      <th>Email</th>
+      <th>Dirección</th>
+      <th>Cód. Postal</th>
+      <th>Población</th>
+      <th>Provincia</th>
+      <th>Teléfono</th>
+    </thead>
+    <tbody>
+      <tr *ngFor="let documentPersona of arrayColeccionPersonas">
+        <td>{{ documentPersona.data.nombre }}</td>
+        <td>{{ documentPersona.data.apellidos }}</td>
+        <td>{{ documentPersona.data.fechaNacimiento }}</td>
+        <td>{{ documentPersona.data.dni }}</td>
+        <td>{{ documentPersona.data.email }}</td>
+        <td>{{ documentPersona.data.direccion }}</td>
+        <td>{{ documentPersona.data.codPostal }}</td>
+        <td>{{ documentPersona.data.poblacion }}</td>
+        <td>{{ documentPersona.data.provincia }}</td>
+        <td>{{ documentPersona.data.telefono }}</td>
 
-  <ion-button (click)="clicBotonInsertar()">Añadir tarea</ion-button>
+      </tr>
+    </tbody>
 
-  <h1>LISTA DE TAREAS</h1>
-  <ion-list>
-    <ion-item *ngFor="let documentTarea of arrayColeccionTareas" (click)="selecTarea(documentTarea)">
-      <ion-grid>
-        <ion-row>
-          <h2>{{documentTarea.data.titulo}}</h2>
-        </ion-row>
-        <ion-row>
-          <p>{{documentTarea.data.descripcion}}</p>
-        </ion-row>
-      </ion-grid>
-    </ion-item>
-  </ion-list>
+  </table>
 </ion-content>
