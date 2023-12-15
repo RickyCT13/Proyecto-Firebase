@@ -1,6 +1,3 @@
-<script>
-  let hide = true;
-</script>
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title> Personas </ion-title>
@@ -14,48 +11,60 @@
     </ion-toolbar>
   </ion-header>
 
-  <div class="ion-padding">
+  <div class="ion-padding" id="divDatos">
     <ion-label>Nombre</ion-label>
-    <ion-input [(ngModel)]="personaEditando.nombre"></ion-input>
-    
+    <ion-input [(ngModel)]="personaEditando.nombre" placeholder="Introduzca un valor..."></ion-input>
+    <br>
+
     <ion-label>Apellido(s)</ion-label>
-    <ion-input [(ngModel)]="personaEditando.apellidos"></ion-input>
-    
+    <ion-input [(ngModel)]="personaEditando.apellidos" placeholder="Introduzca un valor..."></ion-input>
+    <br>
+
     <ion-label>Fecha de nacimiento</ion-label>
-    <ion-input type="date" [(ngModel)]="personaEditando.fechaNacimiento"></ion-input>
-    
+    <ion-input type="date" [(ngModel)]="personaEditando.fechaNacimiento" placeholder="dd-mm-yyyy"></ion-input>
+    <br>
+
     <ion-label>DNI</ion-label>
-    <ion-input [(ngModel)]="personaEditando.dni"></ion-input>
-    
+    <ion-input [(ngModel)]="personaEditando.dni" placeholder="Introduzca un valor..."></ion-input>
+    <br>
+
     <ion-label>Email</ion-label>
-    <ion-input [(ngModel)]="personaEditando.email"></ion-input>
-    
+    <ion-input [(ngModel)]="personaEditando.email" placeholder="Introduzca un valor..."></ion-input>
+    <br>
+
     <ion-label>Dirección</ion-label>
-    <ion-input [(ngModel)]="personaEditando.direccion"></ion-input>
-    
+    <ion-input [(ngModel)]="personaEditando.direccion" placeholder="Introduzca un valor..."></ion-input>
+    <br>
+
     <ion-label>Código postal</ion-label>
-    <ion-input type="number" [(ngModel)]="personaEditando.codPostal"></ion-input>
-    
+    <ion-input type="number" [(ngModel)]="personaEditando.codPostal" placeholder="Introduzca un valor..."></ion-input>
+    <br>
+
     <ion-label>Población</ion-label>
-    <ion-input [(ngModel)]="personaEditando.poblacion"></ion-input>
-    
+    <ion-input [(ngModel)]="personaEditando.poblacion" placeholder="Introduzca un valor..."></ion-input>
+    <br>
+
     <ion-label>Provincia</ion-label>
-    <ion-input [(ngModel)]="personaEditando.provincia"></ion-input>
-    
+    <ion-input [(ngModel)]="personaEditando.provincia" placeholder="Introduzca un valor..."></ion-input>
+    <br>
+
     <ion-label>Número de teléfono</ion-label>
-    <ion-input type="number" [(ngModel)]="personaEditando.telefono"></ion-input>
-    <ion-button (click)="clicBotonInsertar()">Añadir persona</ion-button>
+    <ion-input type="number" [(ngModel)]="personaEditando.telefono" placeholder="Introduzca un valor..."></ion-input>
+    <br>
+    <div style="display: flex; justify-content: center;">
+      <ion-button (click)="clicBotonInsertar()">Añadir persona</ion-button>
+      <ion-button (click)="clicBotonActualizar()">
+        Modificar
+      </ion-button>
+      <ion-button (click)="clicBotonBorrar()" color="danger">
+        Borrar
+      </ion-button>
+    </div>
   </div>
-  
+
 
   <h1>Tabla de personas</h1>
-  <ion-button (click)="visibilidad()" expand="block" fill="clear" shape="round" *ngIf="visible == false">
-    Esconder
-  </ion-button>
-  <ion-button (click)="visibilidad()" expand="block" fill="clear" shape="round" *ngIf="visible == true">
-    Mostrar
-  </ion-button>
-  <table id="tablaPersonas" *ngIf="visible == false">
+  <table id="tablaPersonas">
     <thead>
       <th>Nombre</th>
       <th>Apellidos</th>
@@ -69,7 +78,8 @@
       <th>Teléfono</th>
     </thead>
     <tbody>
-      <tr *ngFor="let documentPersona of arrayColeccionPersonas">
+      <tr *ngFor="let documentPersona of arrayColeccionPersonas"
+        (click)="selecPersona(documentPersona.id, documentPersona.data)">
         <td>{{ documentPersona.data.nombre }}</td>
         <td>{{ documentPersona.data.apellidos }}</td>
         <td>{{ documentPersona.data.fechaNacimiento }}</td>

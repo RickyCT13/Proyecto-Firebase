@@ -26,11 +26,18 @@
   text-decoration: none;
 }
 
+#divDatos {
+  background-color: #222222;
+}
+
 #tablaPersonas {
   
   th, td {
     border-bottom: 1px solid grey;
     text-align: start;
     padding: 20px;
+  }
+  tr:hover {
+    background-color: #222222;
   }
 }

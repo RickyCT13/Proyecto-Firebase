@@ -17,9 +17,7 @@ export class HomePage {
     },
   ];
 
-  idPersonaSelec: string | undefined;
-
-  visible: boolean = true;
+  idPersonaSelec: string = "";
 
   constructor(private firestoreService: FirestoreService) {
     this.obtenerListaPersonas();
@@ -52,37 +50,24 @@ export class HomePage {
       });
   }
 
-  selecPersona(Persona: any) {
-    console.log('Persona seleccionada: ' + Persona);
-    this.idPersonaSelec = Persona.id;
-    this.personaEditando.nombre = Persona.data.nombre;
-    this.personaEditando.apellidos = Persona.data.apellidos;
-    this.personaEditando.fechaNacimiento = Persona.data.fechaNacimiento;
-    this.personaEditando.dni = Persona.data.dni;
-    this.personaEditando.email = Persona.data.email;
-    this.personaEditando.direccion = Persona.data.direccion;
-    this.personaEditando.codPostal = Persona.data.codPostal;
-    this.personaEditando.poblacion = Persona.data.poblacion;
-    this.personaEditando.provincia = Persona.data.provincia;
-    this.personaEditando.telefono = Persona.data.telefono;
+  selecPersona(idPersona: string, personaSelec: Persona) {
+    this.personaEditando = personaSelec;
+    this.idPersonaSelec = idPersona;
+    
   }
 
   clicBotonBorrar() {
-    if (this.idPersonaSelec !== undefined) {
       this.firestoreService.borrar('Personas', this.idPersonaSelec).then(() => {
-        this.obtenerListaPersonas();
         this.personaEditando = {} as Persona;
+        this.idPersonaSelec = '';
+      },
+      (error) => {
+        console.error(error);
       });
-    }
   }
   clicBotonActualizar() {
     this.firestoreService.actualizar('Personas', this.idPersonaSelec, this.personaEditando).then(() => {
-      this.obtenerListaPersonas();
-      this.personaEditando = {} as Persona;
+      console.log('Persona editada correctamente.');
     });
-  }
-
-  visibilidad() {
-    this.visible = (!this.visible);
   }
 }
