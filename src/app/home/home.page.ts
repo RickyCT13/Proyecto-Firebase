@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Persona } from '../persona';
 import { FirestoreService } from '../firestore.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -19,7 +20,7 @@ export class HomePage {
 
   idPersonaSelec: string = "";
 
-  constructor(private firestoreService: FirestoreService) {
+  constructor(private firestoreService: FirestoreService, private router: Router) {
     this.obtenerListaPersonas();
   }
 
@@ -53,6 +54,8 @@ export class HomePage {
   selecPersona(idPersona: string, personaSelec: Persona) {
     this.personaEditando = personaSelec;
     this.idPersonaSelec = idPersona;
+    // Redireccionar a página de detalle de persona
+    this.router.navigate(['/detalle', this.idPersonaSelec]);
     
   }
 
