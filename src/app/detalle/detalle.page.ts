@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Persona } from '../persona';
 
 @Component({
   selector: 'app-detalle',
@@ -8,7 +9,10 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class DetallePage implements OnInit {
 
-  id: string = "";
+  document: any = {
+    id: "",
+    data: {} as Persona
+  }
 
   constructor(private activatedRoute: ActivatedRoute) {
 
