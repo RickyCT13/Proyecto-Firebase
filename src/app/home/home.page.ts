@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
-  personaEditando = {} as Persona;
+  personaEdit = {} as Persona;
 
   arrayColeccionPersonas: any = [
     {
@@ -18,23 +18,13 @@ export class HomePage {
     },
   ];
 
-  idPersonaSelec: string = "";
+  idSelec: string = '';
 
-  constructor(private firestoreService: FirestoreService, private router: Router) {
+  constructor(
+    private firestoreService: FirestoreService,
+    private router: Router
+  ) {
     this.obtenerListaPersonas();
-  }
-
-  clicBotonInsertar() {
-    //this.firestoreService.insertar("Personas", this.personaEditando);
-    this.firestoreService.insertar('Personas', this.personaEditando).then(
-      () => {
-        console.log('Persona creada correctamente!');
-        this.personaEditando = {} as Persona;
-      },
-      (error) => {
-        console.error(error);
-      }
-    );
   }
 
   obtenerListaPersonas() {
@@ -52,25 +42,9 @@ export class HomePage {
   }
 
   selecPersona(idPersona: string, personaSelec: Persona) {
-    this.personaEditando = personaSelec;
-    this.idPersonaSelec = idPersona;
+    this.personaEdit = personaSelec;
+    this.idSelec = idPersona;
     // Redireccionar a página de detalle de persona
-    this.router.navigate(['/detalle', this.idPersonaSelec]);
-    
-  }
-
-  clicBotonBorrar() {
-      this.firestoreService.borrar('Personas', this.idPersonaSelec).then(() => {
-        this.personaEditando = {} as Persona;
-        this.idPersonaSelec = '';
-      },
-      (error) => {
-        console.error(error);
-      });
-  }
-  clicBotonActualizar() {
-    this.firestoreService.actualizar('Personas', this.idPersonaSelec, this.personaEditando).then(() => {
-      console.log('Persona editada correctamente.');
-    });
+    this.router.navigate(['/detalle', this.idSelec]);
   }
 }

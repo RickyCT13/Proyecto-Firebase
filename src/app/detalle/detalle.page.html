@@ -10,49 +10,65 @@
       <ion-title size="large">Detalles de la persona</ion-title>
     </ion-toolbar>
   </ion-header>
-  <div class="ion-padding" id="divDatos">
-    <ion-label>Id</ion-label>
-    <ion-input disabled>{{ id }}</ion-input>
-    <br>
+  <div class="ion-padding ion-content__divDatos" id="divDatos">
+    <div class="divDatos__dato">
+      <ion-label>Nombre</ion-label>
+      <ion-input aria-readonly="true">{{ document.data.nombre }}</ion-input>
+    </div>
 
-    <ion-label>Nombre</ion-label>
-    <ion-input disabled></ion-input>
-    <br>
+    <div class="divDatos__dato">
+      <ion-label>Apellido(s)</ion-label>
+      <ion-input aria-readonly="true">{{ document.data.apellidos }}</ion-input>
+    </div>
 
-    <ion-label>Apellido(s)</ion-label>
-    <ion-input disabled></ion-input>
-    <br>
+    <div class="divDatos__dato">
+      <ion-label>Fecha de nacimiento</ion-label>
+      <ion-input aria-readonly="true">{{ document.data.fechaNacimiento }}</ion-input>
+    </div>
 
-    <ion-label>Fecha de nacimiento</ion-label>
-    <ion-input disabled></ion-input>
-    <br>
+    <div class="divDatos__dato">
+      <ion-label>DNI</ion-label>
+      <ion-input aria-readonly="true">{{ document.data.dni }}</ion-input>
+    </div>
 
-    <ion-label>DNI</ion-label>
-    <ion-input disabled></ion-input>
-    <br>
+    <div class="divDatos__dato">
+      <ion-label>Email</ion-label>
+      <ion-input aria-readonly="true">{{ document.data.email }}</ion-input>
+    </div>
 
-    <ion-label>Email</ion-label>
-    <ion-input disabled></ion-input>
-    <br>
+    <div class="divDatos__dato">
+      <ion-label>Dirección</ion-label>
+      <ion-input aria-readonly="true">{{ document.data.direccion }}</ion-input>
+    </div>
 
-    <ion-label>Dirección</ion-label>
-    <ion-input disabled></ion-input>
-    <br>
+    <div class="divDatos__dato">
+      <ion-label>Código postal</ion-label>
+      <ion-input aria-readonly="true">{{ document.data.codPostal }}</ion-input>
+    </div>
 
-    <ion-label>Código postal</ion-label>
-    <ion-input disabled></ion-input>
-    <br>
+    <div class="divDatos__dato">
+      <ion-label>Población</ion-label>
+      <ion-input aria-readonly="true">{{ document.data.poblacion }}</ion-input>
+    </div>
 
-    <ion-label>Población</ion-label>
-    <ion-input disabled></ion-input>
-    <br>
+    <div class="divDatos__dato">
+      <ion-label>Provincia</ion-label>
+      <ion-input aria-readonly="true">{{ document.data.provincia }}</ion-input>
+    </div>
 
-    <ion-label>Provincia</ion-label>
-    <ion-input disabled></ion-input>
-    <br>
+    <div class="divDatos__dato">
+      <ion-label>Número de teléfono</ion-label>
+      <ion-input aria-readonly="true">{{ document.data.telefono }}</ion-input>
+    </div>
 
-    <ion-label>Número de teléfono</ion-label>
-    <ion-input disabled></ion-input>
-    <br>
+    <div style="display: flex; justify-content: center;">
+      <ion-button (click)="clicBotonInsertar()">Añadir persona</ion-button>
+      <ion-button (click)="clicBotonActualizar()">
+        Modificar
+      </ion-button>
+      <ion-button (click)="clicBotonBorrar()" color="danger">
+        Borrar
+      </ion-button>
+    </div>
   </div>
 </ion-content>

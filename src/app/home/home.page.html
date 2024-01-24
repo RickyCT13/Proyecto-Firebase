@@ -11,7 +11,7 @@
     </ion-toolbar>
   </ion-header>
 
-  <div class="ion-padding" id="divDatos">
+  <!--<div class="ion-padding" id="divDatos">
     <ion-label>Nombre</ion-label>
     <ion-input [(ngModel)]="personaEditando.nombre" placeholder="Introduzca un valor..."></ion-input>
     <br>
@@ -60,8 +60,7 @@
         Borrar
       </ion-button>
     </div>
-  </div>
-
+  </div>-->
 
   <h1>Tabla de personas</h1>
   <table id="tablaPersonas">
@@ -95,4 +94,9 @@
     </tbody>
 
   </table>
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button [routerLink]="['/detalle/new']">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>
