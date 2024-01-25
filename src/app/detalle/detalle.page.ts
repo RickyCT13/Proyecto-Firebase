@@ -9,7 +9,6 @@ import { Persona } from '../persona';
   styleUrls: ['./detalle.page.scss'],
 })
 export class DetallePage implements OnInit {
-  personaEdit = {} as Persona;
 
   idSelec: string = '';
 
@@ -55,11 +54,11 @@ export class DetallePage implements OnInit {
   }
 
   clicBotonInsertar() {
-    //this.firestoreService.insertar("Personas", this.personaEdit);
-    this.firestoreService.insertar('Personas', this.personaEdit).then(
+    //this.firestoreService.insertar("Personas", this.document.data);
+    this.firestoreService.insertar('Personas', this.document.data).then(
       () => {
         console.log('Persona creada correctamente!');
-        this.personaEdit = {} as Persona;
+        this.document.data = {} as Persona;
       },
       (error) => {
         console.error(error);
@@ -70,7 +69,7 @@ export class DetallePage implements OnInit {
   clicBotonBorrar() {
     this.firestoreService.borrar('Personas', this.idSelec).then(
       () => {
-        this.personaEdit = {} as Persona;
+        this.document.data = {} as Persona;
         this.idSelec = '';
       },
       (error) => {
@@ -80,7 +79,7 @@ export class DetallePage implements OnInit {
   }
   clicBotonActualizar() {
     this.firestoreService
-      .actualizar('Personas', this.idSelec, this.personaEdit)
+      .actualizar('Personas', this.idSelec, this.document.data)
       .then(() => {
         console.log('Persona editada correctamente.');
       });

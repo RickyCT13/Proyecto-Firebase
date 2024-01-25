@@ -1,74 +1,89 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title> Personas </ion-title>
+    <ion-title *ngIf="new">Nueva persona</ion-title>
+    <ion-title *ngIf="!new">Detalles de la persona</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
+
   <ion-header collapse="condense">
     <ion-toolbar>
       <ion-title size="large">Detalles de la persona</ion-title>
     </ion-toolbar>
   </ion-header>
   <div class="ion-padding ion-content__divDatos" id="divDatos">
+
     <div class="divDatos__dato">
       <ion-label>Nombre</ion-label>
-      <ion-input aria-readonly="true">{{ document.data.nombre }}</ion-input>
+      <ion-input type="text" [(ngModel)]="document.data.nombre"></ion-input>
     </div>
 
     <div class="divDatos__dato">
       <ion-label>Apellido(s)</ion-label>
-      <ion-input aria-readonly="true">{{ document.data.apellidos }}</ion-input>
+      <ion-input type="text" [(ngModel)]="document.data.apellidos"></ion-input>
     </div>
 
     <div class="divDatos__dato">
       <ion-label>Fecha de nacimiento</ion-label>
-      <ion-input aria-readonly="true">{{ document.data.fechaNacimiento }}</ion-input>
+      <ion-input type="date" [(ngModel)]="document.data.fechaNacimiento" placeholder="dd-mm-yyyy"></ion-input>
     </div>
 
     <div class="divDatos__dato">
       <ion-label>DNI</ion-label>
-      <ion-input aria-readonly="true">{{ document.data.dni }}</ion-input>
+      <ion-input type="text" [(ngModel)]="document.data.dni"></ion-input>
     </div>
 
     <div class="divDatos__dato">
       <ion-label>Email</ion-label>
-      <ion-input aria-readonly="true">{{ document.data.email }}</ion-input>
+      <ion-input type="email" [(ngModel)]="document.data.email"></ion-input>
     </div>
 
     <div class="divDatos__dato">
       <ion-label>Dirección</ion-label>
-      <ion-input aria-readonly="true">{{ document.data.direccion }}</ion-input>
+      <ion-input type="text" [(ngModel)]="document.data.direccion"></ion-input>
     </div>
 
     <div class="divDatos__dato">
       <ion-label>Código postal</ion-label>
-      <ion-input aria-readonly="true">{{ document.data.codPostal }}</ion-input>
+      <ion-input type="number" [(ngModel)]="document.data.codPostal"></ion-input>
     </div>
 
     <div class="divDatos__dato">
       <ion-label>Población</ion-label>
-      <ion-input aria-readonly="true">{{ document.data.poblacion }}</ion-input>
+      <ion-input type="text" [(ngModel)]="document.data.poblacion"></ion-input>
     </div>
 
     <div class="divDatos__dato">
       <ion-label>Provincia</ion-label>
-      <ion-input aria-readonly="true">{{ document.data.provincia }}</ion-input>
+      <ion-input type="text" [(ngModel)]="document.data.provincia"></ion-input>
     </div>
 
     <div class="divDatos__dato">
       <ion-label>Número de teléfono</ion-label>
-      <ion-input aria-readonly="true">{{ document.data.telefono }}</ion-input>
+      <ion-input type="number" [(ngModel)]="document.data.telefono"></ion-input>
     </div>
 
-    <div style="display: flex; justify-content: center;">
-      <ion-button (click)="clicBotonInsertar()">Añadir persona</ion-button>
-      <ion-button (click)="clicBotonActualizar()">
-        Modificar
+    <div style="padding: 1em;">
+      <ion-button *ngIf="new" (click)="clicBotonInsertar()" [routerLink]="['/home']">Añadir persona</ion-button>
+      <ion-button *ngIf="!new" (click)="clicBotonActualizar()" [routerLink]="['/home']">
+        Actualizar Datos
       </ion-button>
-      <ion-button (click)="clicBotonBorrar()" color="danger">
-        Borrar
+      <ion-button id="botonBorrar" *ngIf="!new" (click)="clicBotonBorrar()" color="danger" [routerLink]="['/home']">
+        Borrar Persona
       </ion-button>
     </div>
+    <div style="padding: 1em;">
+      <ion-button color="tertiary" [routerLink]="['/home']">
+        Volver
+      </ion-button>
+    </div>
+    <ion-alert 
+      trigger="botonBorrar"
+      header="Confirmación borrado"
+      message="¿Está seguro de que desea borrar este registro?"
+      [buttons]="botonesAlerta"
+    ></ion-alert>
+
   </div>
 </ion-content>
