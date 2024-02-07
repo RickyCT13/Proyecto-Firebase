@@ -2,6 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FirestoreService } from '../firestore.service';
 import { Persona } from '../persona';
+import {
+  AlertController,
+  LoadingController,
+  NavController,
+  ToastController,
+} from '@ionic/angular';
+import { ImagePicker } from '@awesome-cordova-plugins/image-picker/ngx';
+import { error } from 'console';
 
 @Component({
   selector: 'app-detalle',
@@ -9,8 +17,9 @@ import { Persona } from '../persona';
   styleUrls: ['./detalle.page.scss'],
 })
 export class DetallePage implements OnInit {
-
   idSelec: string = '';
+
+  imagenSelec: string = '';
 
   new: boolean = false;
 
@@ -21,7 +30,12 @@ export class DetallePage implements OnInit {
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private firestoreService: FirestoreService
+    private firestoreService: FirestoreService,
+    private alertController: AlertController,
+    private navController: NavController,
+    private loadingController: LoadingController,
+    private toastController: ToastController,
+    private imagePicker: ImagePicker
   ) {}
 
   ngOnInit() {
@@ -45,8 +59,7 @@ export class DetallePage implements OnInit {
               // De lo contrario, vaciar los datos que hubiera
               this.document.data = {} as Persona;
             }
-          }
-        );
+          });
       }
     } else {
       this.new = true;
@@ -66,16 +79,39 @@ export class DetallePage implements OnInit {
     );
   }
 
-  clicBotonBorrar() {
-    this.firestoreService.borrar('Personas', this.idSelec).then(
-      () => {
-        this.document.data = {} as Persona;
-        this.idSelec = '';
-      },
-      (error) => {
-        console.error(error);
-      }
-    );
+  async clicBotonBorrar() {
+    const alert = await this.alertController.create({
+      header: 'Confirmación de borrado',
+      message: '¿Está seguro/a de que desea borrar este registro?',
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          handler: () => {
+            console.log('Se ha cancelado el borrado');
+          },
+        },
+        {
+          text: 'Confirmar',
+          role: 'confirm',
+          handler: () => {
+            this.firestoreService.borrar('Personas', this.idSelec).then(
+              () => {
+                this.document.data = {} as Persona;
+                this.idSelec = '';
+                this.navController.navigateBack('/home');
+                console.log('Se ha borrado el registro correctamente');
+              },
+              (error) => {
+                console.error(error);
+              }
+            );
+          },
+        },
+      ],
+    });
+
+    await alert.present();
   }
   clicBotonActualizar() {
     this.firestoreService
@@ -83,5 +119,69 @@ export class DetallePage implements OnInit {
       .then(() => {
         console.log('Persona editada correctamente.');
       });
+  }
+  /*
+    Método para seleccionar una imagen
+    Guarda la información de la imagen en Base64
+  */
+  async seleccionarImagen() {
+    // Comprobar si la aplicación tiene permisos de lectura
+    this.imagePicker.hasReadPermission().then(
+      (result) => {
+        // Si no lo tiene, se solicita al usuario
+        if (result == false) {
+          this.imagePicker.requestReadPermission();
+        } else {
+          // Abrir selector de imágenes (ImagePicker)
+          this.imagePicker
+            .getPictures({
+              maximumImagesCount: 1, // Permitir sólo una imagen
+              outputType: 1,         // 1 -> Base64
+            })
+            .then(
+              (results) => {
+                if (results.length > 0) {
+                  // Si se ha elegido una imagen
+                  // Almacena la imagen seleccionada en la variable imagenSelec
+                  this.imagenSelec = `data:image/jpeg;base64,${results[0]}`;
+                  // Imprime por consola la cadena en Base64
+                  console.log(
+                    `Valor en Base64 de la imagen seleccionada: ${this.imagenSelec}`
+                  );
+                }
+              },
+              (error) => {
+                console.error(error);
+              }
+            );
+        }
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
+  }
+  async subirImagen() {
+    // Mensaje de espera mientras se sube la imagen
+    const loading = await this.loadingController.create({
+      message: 'Espere, por favor...'
+    });
+    // Mensaje de subida de imagen exitosa
+    const toast = await this.toastController.create({
+      message: 'Imagen subida con éxito',
+      duration: 3000
+    });
+
+    // Carpeta en el Storage donde se guardará la imagen
+    let nombreCarpeta = 'imagenes';
+
+    // Mostrar mensaje de espera
+    loading.present();
+
+    // Asignar nombre en función de fecha y hora actual
+    let nombreImagen = `${new Date().getTime()}`;
+
+    // Llamar al método para subir la imagen
+    this.firestoreService.subirImagenBase64(nombreCarpeta, nombreImagen, this.imagenSelec)
   }
 }
