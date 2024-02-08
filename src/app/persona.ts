@@ -9,5 +9,6 @@ export interface Persona {
     poblacion: string;
     provincia: string;
     telefono: number;
+    imgURL: string;
 
 }

@@ -136,7 +136,7 @@ export class DetallePage implements OnInit {
           this.imagePicker
             .getPictures({
               maximumImagesCount: 1, // Permitir sólo una imagen
-              outputType: 1,         // 1 -> Base64
+              outputType: 1, // 1 -> Base64
             })
             .then(
               (results) => {
@@ -164,12 +164,13 @@ export class DetallePage implements OnInit {
   async subirImagen() {
     // Mensaje de espera mientras se sube la imagen
     const loading = await this.loadingController.create({
-      message: 'Espere, por favor...'
+      message: 'Espere, por favor...',
     });
+
     // Mensaje de subida de imagen exitosa
     const toast = await this.toastController.create({
       message: 'Imagen subida con éxito',
-      duration: 3000
+      duration: 3000,
     });
 
     // Carpeta en el Storage donde se guardará la imagen
@@ -182,6 +183,33 @@ export class DetallePage implements OnInit {
     let nombreImagen = `${new Date().getTime()}`;
 
     // Llamar al método para subir la imagen
-    this.firestoreService.subirImagenBase64(nombreCarpeta, nombreImagen, this.imagenSelec)
+    this.firestoreService
+      .subirImagenBase64(nombreCarpeta, nombreImagen, this.imagenSelec)
+      .then((snapshot) => {
+        snapshot.ref.getDownloadURL().then((downloadURL) => {
+          //  La variable downloadURL contiene la dirección URL de la imagen
+          console.log(`downloadURL: ${downloadURL}`);
+
+          // Mensaje de finalización de subida
+          toast.present();
+
+          // Ocultar mensaje de espera
+          loading.dismiss();
+        });
+      });
+  }
+  async eliminarArchivo(fileURL: string) {
+    const toast = await this.toastController.create({
+      message: 'Archivo eliminado con éxito',
+      duration: 3000,
+    });
+    this.firestoreService.eliminarArchivoPorURL(fileURL).then(
+      () => {
+        toast.present();
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
   }
 }

@@ -63,6 +63,13 @@
       <ion-label>Número de teléfono</ion-label>
       <ion-input type="number" [(ngModel)]="document.data.telefono"></ion-input>
     </div>
+    <div class="divDatos__imagen">
+      <ion-label>Imagen</ion-label>
+      <img *ngIf="document.data.imgURL" [src]="document.data.imgURL" alt="Imagen">
+      <ion-button  (click)="seleccionarImagen()" expand="block" fill="clear" shape="round">
+        Cambiar
+      </ion-button>
+    </div>
 
     <div style="padding: 1em;">
       <ion-button *ngIf="new" (click)="clicBotonInsertar()" [routerLink]="['/home']">Añadir persona</ion-button>
