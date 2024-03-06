@@ -28,6 +28,10 @@ export class DetallePage implements OnInit {
     data: {} as Persona,
   };
 
+  imagenPresente() {
+    return this.imagenSelec || this.document.data.imgURL;
+  }
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private firestoreService: FirestoreService,
@@ -89,7 +93,7 @@ export class DetallePage implements OnInit {
           role: 'cancel',
           handler: () => {
             console.log('Se ha cancelado el borrado');
-          },
+          }
         },
         {
           text: 'Confirmar',
@@ -114,12 +118,34 @@ export class DetallePage implements OnInit {
     await alert.present();
   }
   clicBotonActualizar() {
+    /*
+      Si hay una imagen seleccionada, subir dicha imagen al almacenamiento
+      de firebase
+    */
+    if (this.imagenSelec) {
+      this.subirImagen()
+        .then(() => {
+          this.actualizarDatos();
+        })
+        .catch((error) => console.error(error));
+    }
+    /*
+      De lo contrario, simplemente actualiza el resto de datos
+    */
+    else {
+      this.actualizarDatos();
+    }
+  }
+
+  actualizarDatos() {
     this.firestoreService
       .actualizar('Personas', this.idSelec, this.document.data)
       .then(() => {
         console.log('Persona editada correctamente.');
-      });
+      })
+      .catch((error) => console.error(error));
   }
+
   /*
     Método para seleccionar una imagen
     Guarda la información de la imagen en Base64
@@ -136,14 +162,14 @@ export class DetallePage implements OnInit {
           this.imagePicker
             .getPictures({
               maximumImagesCount: 1, // Permitir sólo una imagen
-              outputType: 1, // 1 -> Base64
+              outputType: 1 // 1 -> Base64
             })
             .then(
               (results) => {
                 if (results.length > 0) {
                   // Si se ha elegido una imagen
                   // Almacena la imagen seleccionada en la variable imagenSelec
-                  this.imagenSelec = `data:image/jpeg;base64,${results[0]}`;
+                  this.imagenSelec = 'data:image/jpeg;base64,' + results[0];
                   // Imprime por consola la cadena en Base64
                   console.log(
                     `Valor en Base64 de la imagen seleccionada: ${this.imagenSelec}`
@@ -165,13 +191,13 @@ export class DetallePage implements OnInit {
     return new Promise<void>(async (resolve, reject) => {
       // Mensaje de espera mientras se sube la imagen
       const loading = await this.loadingController.create({
-        message: 'Espere, por favor...',
+        message: 'Espere, por favor...'
       });
 
       // Mensaje de subida de imagen exitosa
       const toast = await this.toastController.create({
         message: 'Imagen subida con éxito',
-        duration: 3000,
+        duration: 3000
       });
 
       // Carpeta en el Storage donde se guardará la imagen
@@ -182,6 +208,7 @@ export class DetallePage implements OnInit {
 
       // Asignar nombre en función de fecha y hora actual
       let nombreImagen = `${new Date().getTime()}`;
+      console.log('Nombre de la imagen: ' + nombreImagen);
 
       // Llamar al método para subir la imagen
       this.firestoreService
@@ -190,6 +217,7 @@ export class DetallePage implements OnInit {
           snapshot.ref.getDownloadURL().then((downloadURL) => {
             //  La variable downloadURL contiene la dirección URL de la imagen
             console.log(`downloadURL: ${downloadURL}`);
+            this.document.data.imgURL = downloadURL;
 
             // Mensaje de finalización de subida
             toast.present();
@@ -199,7 +227,8 @@ export class DetallePage implements OnInit {
             //
             resolve();
           });
-        }).catch((error) => {
+        })
+        .catch((error) => {
           reject(error);
         });
     });
@@ -207,7 +236,7 @@ export class DetallePage implements OnInit {
   async eliminarArchivo(fileURL: string) {
     const toast = await this.toastController.create({
       message: 'Archivo eliminado con éxito',
-      duration: 3000,
+      duration: 3000
     });
     this.firestoreService.eliminarArchivoPorURL(fileURL).then(
       () => {
