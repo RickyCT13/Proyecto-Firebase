@@ -1,4 +1,5 @@
 .ion-content__divDatos {
+    padding: 0 2rem;
     .divDatos__dato {
         margin: 1em;
         ion-input {
@@ -8,17 +9,29 @@
             text-indent: 1em;
             display: flex;
             align-items: center;
+            &:focus {
+                border: 2px solid lightgreen;
+            }
         }
     }
     .divDatos__imagen {
+        margin: 1em;
+        padding: 1em;
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
+        justify-content: space-evenly;
         img {
-            width: 90vw;
+            width: 25vw;
             height: auto;
+            border-radius: 50%;
+            justify-self: start;
         }
-        .imagen__botonesAccion {
+        .imagen__nombreBotones {
+            display: flex;
             flex-direction: column;
+        }
+
+        .imagen__botonesAccion {
         }
     }
 }

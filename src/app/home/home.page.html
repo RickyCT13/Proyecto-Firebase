@@ -11,7 +11,15 @@
     </ion-toolbar>
   </ion-header>
 
-  
+  <div class="personas">
+    <ion-card *ngFor="let documentPersona of arrayColeccionPersonas"
+      (click)="selecPersona(documentPersona.id, documentPersona.data)">
+      <img *ngIf="documentPersona.data.imgURL" [src]="documentPersona.data.imgURL" alt="Imagen">
+      <ion-card-header>
+        <ion-card-title>{{ documentPersona.data.nombre }} {{ documentPersona.data.apellidos }}</ion-card-title>
+      </ion-card-header>
+    </ion-card>
+  </div>
 
   <h1>Tabla de personas</h1>
   <table id="tablaPersonas">

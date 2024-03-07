@@ -22,13 +22,34 @@
           <p *ngIf="imagenPresente()">Cambiar Imagen</p>
           <p *ngIf="!imagenPresente()">Seleccionar Imagen</p>
         </ion-button>
-        <ion-button *ngIf="imagenPresente()" (click)="eliminarArchivo(document.data.imgURL)"
-          color="danger" expand="block" shape="round">
+        <ion-button *ngIf="imagenPresente()" (click)="eliminarArchivo(document.data.imgURL)" color="danger"
+          expand="block" shape="round">
           <p>Borrar Imagen</p>
         </ion-button>
       </div>
 
     </div>
+    <ion-card class="divDatos__imagen">
+      <img *ngIf="imagenPresente()" [src]="imagenSelec || document.data.imgURL" alt="Imagen">
+      <p *ngIf="!imagenPresente()">No hay una imagen seleccionada...</p>
+      <div class="imagen__nombreBotones">
+        <ion-card-header>
+          <ion-card-title>{{ document.data.nombre }} {{ document.data.apellidos }}</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-button (click)="seleccionarImagen()" expand="block" shape="round">
+          <p *ngIf="imagenPresente()">Cambiar Imagen</p>
+          <p *ngIf="!imagenPresente()">Seleccionar Imagen</p>
+        </ion-button>
+        <ion-button *ngIf="imagenPresente()" (click)="eliminarArchivo(document.data.imgURL)" color="danger" expand="block"
+          shape="round">
+          <p>Borrar Imagen</p>
+        </ion-button>
+        </ion-card-content>
+      </div>
+      
+      
+    </ion-card>
 
     <div class="divDatos__dato">
       <ion-label>Nombre</ion-label>
