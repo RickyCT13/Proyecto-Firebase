@@ -31,18 +31,6 @@
 }
 
 .personas {
-  
-}
-
-#tablaPersonas {
-  text-wrap: balance;
-  
-  th, td {
-    border-bottom: 1px solid grey;
-    text-align: start;
-    padding: 1em 0.25em;
-  }
-  tr:hover {
-    background-color: #222222;
-  }
+  display: flex;
+  flex-flow: row wrap;
 }

@@ -18,44 +18,32 @@
       <ion-card-header>
         <ion-card-title>{{ documentPersona.data.nombre }} {{ documentPersona.data.apellidos }}</ion-card-title>
       </ion-card-header>
+      <ion-card-content>
+        {{ documentPersona.data.telefono }}
+        <!-- Añadir botón llamar 
+        <ion-button (click)="llamar(documentPersona.data.telefono)" expand="block" fill="clear" shape="round">
+          Llamar
+        </ion-button>-->
+      </ion-card-content>
     </ion-card>
   </div>
-
-  <h1>Tabla de personas</h1>
-  <table id="tablaPersonas">
-    <thead>
-      <th>Nombre</th>
-      <th>Apellidos</th>
-      <th>Fecha Nac.</th>
-      <th>DNI</th>
-      <th>Email</th>
-      <th>Dirección</th>
-      <th>Cód. Postal</th>
-      <th>Población</th>
-      <th>Provincia</th>
-      <th>Teléfono</th>
-    </thead>
-    <tbody>
-      <tr *ngFor="let documentPersona of arrayColeccionPersonas"
-        (click)="selecPersona(documentPersona.id, documentPersona.data)">
-        <td>{{ documentPersona.data.nombre }}</td>
-        <td>{{ documentPersona.data.apellidos }}</td>
-        <td>{{ documentPersona.data.fechaNacimiento }}</td>
-        <td>{{ documentPersona.data.dni }}</td>
-        <td>{{ documentPersona.data.email }}</td>
-        <td>{{ documentPersona.data.direccion }}</td>
-        <td>{{ documentPersona.data.codPostal }}</td>
-        <td>{{ documentPersona.data.poblacion }}</td>
-        <td>{{ documentPersona.data.provincia }}</td>
-        <td>{{ documentPersona.data.telefono }}</td>
-
-      </tr>
-    </tbody>
-
-  </table>
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button [routerLink]="['/detalle/new']">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>
 </ion-content>
+<ion-toolbar>
+  <ion-tabs>
+    <ion-tab-bar slot="bottom">
+      <ion-tab-button tab="home">
+        <ion-icon name="person-circle-outline"></ion-icon>
+        <ion-label>Personas</ion-label>
+      </ion-tab-button>
+      <ion-tab-button tab="info">
+        <ion-icon name="information-circle-outline"></ion-icon>
+        <ion-label>Información</ion-label>
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
+</ion-toolbar>

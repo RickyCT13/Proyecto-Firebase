@@ -1,0 +1,49 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Información sobre la aplicación</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div id="divDetalles">
+    <ul>
+      <li>
+        Autor: Ricardo Moreno Cantea
+      </li>
+      <li>
+        Descripción: Esta aplicación se ha realizado para el módulo de Horas de Libre Configuración del 2º año del CFGS
+        de Desarrollo de Aplicaciones Web (DAW). En este módulo hemos aprendido a crear aplicaciones móviles usando el
+        framework de Ionic y, en el caso de este proyecto, se usa Firebase para poder guardar y recuperar datos de una
+        base de datos Firestore.
+      </li>
+      <li>
+        Tecnologías utilizadas:
+        <ul>
+          <li>HTML 5</li>
+          <li>SASS/SCSS</li>
+          <li>TypeScript</li>
+          <li>Ionic</li>
+          <li>Angular</li>
+          <li>Node.js</li>
+          <li>Google Firebase</li>
+        </ul>
+      </li>
+    </ul>
+
+
+  </div>
+</ion-content>
+<ion-toolbar>
+  <ion-tabs>
+    <ion-tab-bar slot="bottom">
+      <ion-tab-button tab="home">
+        <ion-icon name="person-circle-outline"></ion-icon>
+        <ion-label>Personas</ion-label>
+      </ion-tab-button>
+      <ion-tab-button tab="info">
+        <ion-icon name="information-circle-outline"></ion-icon>
+        <ion-label>Información</ion-label>
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
+</ion-toolbar>

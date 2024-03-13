@@ -13,22 +13,6 @@
     </ion-toolbar>
   </ion-header>
   <div class="ion-padding ion-content__divDatos" id="divDatos">
-
-    <div class="divDatos__imagen">
-      <img *ngIf="imagenPresente()" [src]="imagenSelec || document.data.imgURL" alt="Imagen">
-      <p *ngIf="!imagenPresente()">No hay una imagen seleccionada...</p>
-      <div class="imagen__botonesAccion">
-        <ion-button (click)="seleccionarImagen()" expand="block" shape="round">
-          <p *ngIf="imagenPresente()">Cambiar Imagen</p>
-          <p *ngIf="!imagenPresente()">Seleccionar Imagen</p>
-        </ion-button>
-        <ion-button *ngIf="imagenPresente()" (click)="eliminarArchivo(document.data.imgURL)" color="danger"
-          expand="block" shape="round">
-          <p>Borrar Imagen</p>
-        </ion-button>
-      </div>
-
-    </div>
     <ion-card class="divDatos__imagen">
       <img *ngIf="imagenPresente()" [src]="imagenSelec || document.data.imgURL" alt="Imagen">
       <p *ngIf="!imagenPresente()">No hay una imagen seleccionada...</p>
@@ -108,6 +92,9 @@
       </ion-button>
       <ion-button id="botonBorrar" *ngIf="!new" color="danger" (click)="clicBotonBorrar()">
         Borrar Persona
+      </ion-button>
+      <ion-button *ngIf="!new" (click)="compartir()">
+        Compartir
       </ion-button>
     </div>
     <div style="padding: 1em;">

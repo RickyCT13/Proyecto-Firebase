@@ -47,4 +47,11 @@ export class HomePage {
     // Redireccionar a página de detalle de persona
     this.router.navigate(['/detalle', this.idSelec]);
   }
+
+  /*llamar(telefono: string) {
+    this.callNumber
+      .callNumber(telefono, false)
+      .then((response) => console.log('Listo para llamar', response))
+      .catch((error) => console.error('Error preparando la llamada', error));
+  }*/
 }

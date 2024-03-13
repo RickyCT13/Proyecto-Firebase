@@ -10,6 +10,7 @@ import {
 } from '@ionic/angular';
 import { ImagePicker } from '@awesome-cordova-plugins/image-picker/ngx';
 import { error } from 'console';
+import { Share } from '@capacitor/share';
 
 @Component({
   selector: 'app-detalle',
@@ -246,5 +247,12 @@ export class DetallePage implements OnInit {
         console.error(error);
       }
     );
+  }
+  async compartir() {
+    await Share.share({
+      title: 'Datos del contacto',
+      text: `Nombre: ${this.document.data.nombre}\nApellidos: ${this.document.data.apellidos}\nTeléfono: ${this.document.data.telefono}\nEmail: ${this.document.data.email}`,
+      dialogTitle: 'Compartir',
+    });
   }
 }
